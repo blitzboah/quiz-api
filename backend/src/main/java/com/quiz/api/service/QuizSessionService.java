@@ -8,8 +8,10 @@ import com.quiz.api.repository.QuizSessionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +19,7 @@ public class QuizSessionService {
     @Autowired private QuizSessionRepo quizSessionRepo;
     @Autowired private QuestionsRepo questionsRepo;
 
+    //save the answer to session repo
     public void submitAnswer(Long userId, int questionId, String answer){
 
         Questions question = questionsRepo.findById(questionId).orElseThrow( () -> new RuntimeException("question not found"));
@@ -34,6 +37,7 @@ public class QuizSessionService {
         quizSessionRepo.save(submittedAnswer);
     }
 
+    //returns necessary data for results
     public List<QuizSessionResultDTO> getResults(Long userId){
        List<QuizSession> results = quizSessionRepo.findByUserId(userId);
 
@@ -51,7 +55,11 @@ public class QuizSessionService {
        }).collect(Collectors.toList());
     }
 
+    //deletes every que mapped with user id
     public void deleteSession(Long userId){
-        quizSessionRepo.deleteByUserId(userId);
+        List<QuizSession> quizSession = quizSessionRepo.findByUserId(userId);
+        for(QuizSession q: quizSession){
+            quizSessionRepo.delete(q);
+        }
     }
 }

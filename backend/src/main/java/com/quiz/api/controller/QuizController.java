@@ -21,6 +21,7 @@ public class QuizController {
     @Autowired private QuizSessionService quizSessionService;
     @Autowired private UserService userService;
 
+    //validate user if its in db or not
     @GetMapping("/validate-user")
     public ResponseEntity<?> startQuiz(@RequestParam Long userId){
         if(userService.userExists(userId))
@@ -28,6 +29,7 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //returns random question using question service
     @GetMapping("/question")
     public ResponseEntity<Questions> question(){
         try {
@@ -39,6 +41,7 @@ public class QuizController {
         }
     }
 
+    //submits the user answer and save in the session repo for finalizing results
     @PostMapping("/submit")
     public ResponseEntity<?> submitAnswer(@RequestParam Long userId,@RequestParam int questionId,
                                           @RequestParam String answer){
@@ -51,6 +54,7 @@ public class QuizController {
         }
     }
 
+    //returns result dto
     @GetMapping("/results")
     public ResponseEntity<List<QuizSessionResultDTO>> getResults(@RequestParam Long userId){
         try {
@@ -61,6 +65,7 @@ public class QuizController {
         }
     }
 
+    //deletes every question that is mapped with user id, to reset results
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteSession(@RequestParam Long userId){
         try {

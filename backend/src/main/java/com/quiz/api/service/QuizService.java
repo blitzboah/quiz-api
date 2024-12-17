@@ -10,6 +10,7 @@ public class QuizService {
     @Autowired
     private QuestionsRepo questionsRepo;
 
+    //returns random question using query
     public Questions getRandomQuestion() {
         return questionsRepo.findRandomQuestion();
     }
