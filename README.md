@@ -30,6 +30,10 @@ mvn clean install
 # Using Maven
 mvn spring-boot:run
 ```
+### 5. Access H2 Console
+- Access the H2 Console at: http://localhost:8080/h2-console
+- Use the JDBC URL configured in application.properties
+- Allows direct database inspection during development
 
 ### Backend API Endpoints
 - `GET /api/validate-user`: Validate user access
@@ -54,6 +58,11 @@ npm install
 ```bash
 npm run dev
 ```
+
+### 4. Access Frontend
+
+- Open http://localhost:5173 in your web browser
+- This is the main entry point for the quiz application
 
 ## Running the Full Application
 
